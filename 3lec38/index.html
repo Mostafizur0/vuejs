@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>VueJS</title>
+	<link rel="stylesheet" href="">
+	<script src="vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<ul><!-- key keyword is for update purpose-->
+            <li v-for="(item, i) in ingredients" key="item">{{ item }} ({{ i }})</li>
+        </ul>
+        <button @click="ingredients.push('spices')"> Add New</button>
+        <span v-for="n in 10">{{ n }}</span>
+	</div>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+                ingredients: ['meat', 'fruit', 'cookies'],
+                persons: [
+                    {name: 'Max', age: 27, color: 'red'},
+                    {name: 'Ane', age: 'unknown', color: 'blue'}
+                ]
+			},
+			methods: {
+				changeTitle: function (event) {
+					this.title = event.target.value;
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>
