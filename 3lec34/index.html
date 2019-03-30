@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>VueJS</title>
+	<link rel="stylesheet" href="">
+	<script src="vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<p v-if="show">You can see me! <span>Hello!</span></p><!-- Remove the element from the page. Donot hide rather remove -->>
+        <p v-else >Now you can see me!</p>
+        <template v-if="show"><!-- Alternative of Div. Wrape multiple element together -->
+            <h1>Heading</h1>
+            <p>Inside the template.</p>
+        </template>
+        <p v-show="show">Do you also see me?</p><!-- It only hides element not removes -->
+        <button @click="show = !show">Switch</button>
+	</div>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				show: true,
+			},
+			methods: {
+				changeTitle: function (event) {
+					this.title = event.target.value;
+				}
+			}
+		});
+	</script>
+</body>
+
+</html>
