@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monster Slayer</title>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+    <section class="row">
+        <div class="small-6 columns">
+            <h1 class="text-center">YOU</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white; background-size: 'heroHealth'+'%'">
+                    {{ heroHealth }}
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns">
+            <h1 class="text-center">MONSTER</h1>
+            <div class="healthbar">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                    {{ monsterHealth }}
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="row controls" v-show="start">
+        <div class="small-12 columns">
+            <button id="start-game" @click="toggle">START NEW GAME</button>
+        </div>
+    </section>
+    <section class="row controls" v-show="!start">
+        <div class="small-12 columns">
+            <button id="attack" @click="Attack">ATTACK</button>
+            <button id="special-attack" @click="specialAttack">SPECIAL ATTACK</button>
+            <button id="heal" @click="Heal">HEAL</button>
+            <button id="give-up"  @click="giveUpAlert">GIVE UP</button>
+        </div>
+    </section>
+    <section class="row log">
+        <div class="small-12 columns">
+            <ul v-for="(item, i) in history">
+                <li>
+                    <span class="player-turn" v-if="i%2==0"><p style="background-color: skyblue; margin: 0;">{{ item }}</p></span>
+                    <span class="monster-turn" style="background-color: rgb(121, 81, 97); margin: 0;" v-else><p>{{ item }}</p></span>
+                </li>
+            </ul>
+        </div>
+    </section>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            start: true,
+            heroHealth: 100,
+            monsterHealth: 100,
+            history: [],
+        },
+        watch: {
+            heroHealth: function () {
+                if (this.heroHealth<=0) {
+                    alert('You lose!!!');
+                    this.start = true;
+                    this.heroHealth = 100;
+                    this.monsterHealth = 100;
+                    this.history = [];
+                }
+            },
+            monsterHealth: function () {
+                if (this.monsterHealth<=0) {
+                    alert('You win!!!');
+                    this.start = true;
+                    this.heroHealth = 100;
+                    this.monsterHealth = 100;
+                    this.history = [];
+                }
+            }
+        },
+        methods: {
+            //Math.floor(Math.random()*(this.max-this.min+1)+this.min);
+            toggle: function() {
+                this.start= !this.start;
+                console.log(this.start);
+            },
+            Attack: function() {
+                randnum = this.randNumGen(10, 1);
+                this.history.push('Player hits Monster for '+randnum+' points');
+                console.log(randnum);
+                this.monsterHealth = this.monsterHealth-randnum;
+                console.log(this.monsterHealth);
+                this.monsterAttack();
+            },
+            specialAttack: function() {
+                randnum = this.randNumGen(30, 10);
+                this.history.push('Player hits Monster for '+randnum+' points');
+                this.monsterHealth-= randnum;
+                console.log(this.monsterHealth);
+                this.monsterAttack();
+            },
+            Heal: function() {
+                randnum = this.randNumGen(30, 1);
+                this.heroHealth+= randnum;
+                this.history.push('Player heals himself for '+randnum+' points');
+                if(this.heroHealth>100){
+                    this.heroHealth = 100;
+                }
+                console.log(this.heroHealth);
+                this.monsterAttack();
+            },
+            giveUpAlert: function() {
+                alert("Give up?");
+                this.heroHealth = 0;
+                console.log(this.monsterHealth);
+            },
+            monsterAttack: function() {
+                randnum = this.randNumGen(30, 1);
+                this.heroHealth-= randnum;
+                this.history.push('Monster hits Player for '+randnum+' points');
+                console.log(this.heroHealth);
+            },
+            randNumGen: function(max, min) {
+                return Math.floor(Math.random()*((max*1)-(min*1)+1)+(min*1));
+            },
+        }
+    });
+</script>
+</body>
+</html>
