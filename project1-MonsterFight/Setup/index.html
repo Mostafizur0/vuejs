@@ -12,7 +12,7 @@
         <div class="small-6 columns">
             <h1 class="text-center">YOU</h1>
             <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white; background-size: 'heroHealth'+'%'">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: heroHealth+'%'}">
                     {{ heroHealth }}
                 </div>
             </div>
@@ -20,7 +20,7 @@
         <div class="small-6 columns">
             <h1 class="text-center">MONSTER</h1>
             <div class="healthbar">
-                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;">
+                <div class="healthbar text-center" style="background-color: green; margin: 0; color: white;" :style="{width: monsterHealth+'%'}">
                     {{ monsterHealth }}
                 </div>
             </div>
@@ -43,8 +43,8 @@
         <div class="small-12 columns">
             <ul v-for="(item, i) in history">
                 <li>
-                    <span class="player-turn" v-if="i%2==0"><p style="background-color: skyblue; margin: 0;">{{ item }}</p></span>
-                    <span class="monster-turn" style="background-color: rgb(121, 81, 97); margin: 0;" v-else><p>{{ item }}</p></span>
+                    <span class="player-turn" v-if="i%2==0"><p :style="player-turn">{{ item }}</p></span>
+                    <span class="monster-turn" :style="monster-turn" v-else><p>{{ item }}</p></span>
                 </li>
             </ul>
         </div>
