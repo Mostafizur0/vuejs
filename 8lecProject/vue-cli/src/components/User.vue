@@ -3,13 +3,22 @@
         <h1>The User Component</h1>
         <p>I'm an awesome User!</p>
         <button @click="changeName">Change My Name</button>
+        <p>Name is: {{ name }} </p>
+        <p>Age is: {{ age }} </p>
         <hr>
         <div class="row">
             <div class="col-xs-12 col-sm-6">
-                <app-user-detail :myName="name" @nameWasReset="name = $event" :resetFun="resetName"></app-user-detail>
+                <app-user-detail
+                :myName="name"
+                @nameWasReset="name = $event"
+                :resetFun="resetName"
+                :userAge = "age"
+                ></app-user-detail>
             </div>
             <div class="col-xs-12 col-sm-6">
-                <app-user-edit></app-user-edit>
+                <app-user-edit
+                :userAge = "age"
+                @ageWasEdited= "age = $event"></app-user-edit><!-- Export as property, import via event listener -->
             </div>
         </div>
     </div>
@@ -22,7 +31,8 @@
     export default {
         data: function() {
             return {
-              name: 'Sabbir'
+              name: 'Sabbir',
+              age: 25
             };
         },
         methods: {
